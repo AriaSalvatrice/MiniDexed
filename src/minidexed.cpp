@@ -1793,17 +1793,3 @@ unsigned CMiniDexed::getModController (unsigned controller, unsigned parameter, 
 	}
 	
 }
-
-
-// Display SysEx Parameter Message Format
-//   F0 7D 20
-//   ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch 
-//   ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch 
-//   F7
-//
-//   ch = ASCII Character, 2x 16 lines
-//
-void CMiniDexed::remoteDisplayRecv (const uint8_t *pMessage, const uint16_t nLength)
-{
-	m_UI.LCDWrite("Hello!!!");
-}

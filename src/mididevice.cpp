@@ -181,11 +181,25 @@ void CMIDIDevice::MIDIMessageHandler (const u8 *pMessage, size_t nLength, unsign
 		LOGNOTE("Master volume: %f",nMasterVolume);
 		m_pSynthesizer->setMasterVolume(nMasterVolume);
 	}
-	else if (pMessage[0] == MIDI_SYSTEM_EXCLUSIVE_BEGIN &&
-			 pMessage[1] == 0x7D)
+	else if (pMessage[0]  == MIDI_SYSTEM_EXCLUSIVE_BEGIN &&
+			 pMessage[1]  == 0x7D &&
+			 pMessage[2]  == 0x20 &&
+			 pMessage[35] == 0xF7)
 	{
-		m_pSynthesizer->remoteDisplayRecv(pMessage, nLength);
-		m_pUI->LCDWrite("HI!!!! TEST");
+		//  Display SysEx Parameter Message Format
+		//  F0 7D 20
+		//  ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch 
+		//  ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch ch 
+		//  F7
+		//
+		//  ch = ASCII Character, 2x 16 lines
+		//
+		char message[33];
+		for (int i = 0; i < 32; i++) {
+			message[i] = static_cast<char>(pMessage[i + 3]);
+		}
+		message[32] = '\0';
+		m_pUI->LCDWrite(message);
 	}
 	else
 	{

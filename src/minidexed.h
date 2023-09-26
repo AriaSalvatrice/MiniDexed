@@ -200,8 +200,6 @@ public:
 	void SetTGParameter (TTGParameter Parameter, int nValue, unsigned nTG);
 	int GetTGParameter (TTGParameter Parameter, unsigned nTG);
 
-	void remoteDisplayRecv (const uint8_t *pMessage, const uint16_t nLength);
-
 	// access (global or OP-related) parameter of the active voice of a TG
 	static const unsigned NoOP = 6;		// for global parameters
 	void SetVoiceParameter (uint8_t uchOffset, uint8_t uchValue, unsigned nOP, unsigned nTG);
