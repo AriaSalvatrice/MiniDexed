@@ -181,6 +181,12 @@ void CMIDIDevice::MIDIMessageHandler (const u8 *pMessage, size_t nLength, unsign
 		LOGNOTE("Master volume: %f",nMasterVolume);
 		m_pSynthesizer->setMasterVolume(nMasterVolume);
 	}
+	else if (pMessage[0] == MIDI_SYSTEM_EXCLUSIVE_BEGIN &&
+			 pMessage[1] == 0x7D)
+	{
+		m_pSynthesizer->remoteDisplayRecv(pMessage, nLength);
+		m_pUI->LCDWrite("HI!!!! TEST");
+	}
 	else
 	{
 		// Perform any MiniDexed level MIDI handling before specific Tone Generators
